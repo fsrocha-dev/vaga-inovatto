@@ -20,7 +20,10 @@ import {
   QItemLabel,
   QSpace,
   QBadge,
-  QAvatar
+  QAvatar,
+  QExpansionItem,
+  QCard,
+  QCardSection
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -41,7 +44,10 @@ Vue.use(Quasar, {
     QItemLabel,
     QSpace,
     QBadge,
-    QAvatar
+    QAvatar,
+    QExpansionItem,
+    QCard,
+    QCardSection
   },
   directives: {
   },

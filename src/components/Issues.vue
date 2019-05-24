@@ -4,12 +4,30 @@
       <div class="q-py-md">
         <span class="text-h4">Issues</span>
       </div>
-      <div v-for="issue in issues" :key="issue.id" class="row no-wrap items-center q-mt-md q-pa-sm bg-grey-3 rounded-borders">
-        <div>Titulo: {{ issue.title }}</div>
-        <q-space />
-        <q-avatar>
-          <img :src="issue.user.avatar_url">
-        </q-avatar>
+      <div v-for="issue in issues" :key="issue.id" class="row no-wrap items-center q-mt-sm q-pa-sm bg-grey-3 rounded-borders">
+        <q-expansion-item class="full-width">
+          <template v-slot:header>
+            <q-item-section avatar>
+              <q-avatar>
+                <img :src="issue.user.avatar_url">
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              {{issue.title}}
+            </q-item-section>
+            <q-item-section side>
+              <div class="row items-center">
+                <q-badge color="green" class="q-mx-md">{{ issue.state }}</q-badge>
+              </div>
+            </q-item-section>
+          </template>
+          <q-card>
+            <q-card-section>
+              <span class="block"><b>Criado por:</b> {{ issue.user.login }}</span>
+              <span><b>Comentário:</b> {{ issue.body }}</span>
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
       </div>
     </div>
   </q-page>
