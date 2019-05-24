@@ -23,8 +23,11 @@
           </template>
           <q-card>
             <q-card-section>
-              <span class="block"><b>Criado por:</b> {{ issue.user.login }}</span>
-              <span><b>Comentário:</b> {{ issue.body }}</span>
+              <span class="block"><b>Criado por: </b> {{ issue.user.login }}</span>
+              <span>
+                <b>Comentário: </b>
+                <a class="link" :href="issue.html_url" target="_blank">{{ issue.body }}</a>
+              </span>
             </q-card-section>
           </q-card>
         </q-expansion-item>
