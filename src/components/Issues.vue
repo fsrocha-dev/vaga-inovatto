@@ -17,17 +17,26 @@
             </q-item-section>
             <q-item-section side>
               <div class="row items-center">
-                <q-badge color="green" class="q-mx-md">{{ issue.state }}</q-badge>
+                <q-badge v-if="issue.state == 'open'" color="grenn" class="q-mx-md">{{ issue.state }}</q-badge>
+                <q-badge v-else color="red" class="q-mx-md">{{ issue.state }}</q-badge>
               </div>
             </q-item-section>
           </template>
           <q-card>
             <q-card-section>
-              <span class="block"><b>Criado por: </b> {{ issue.user.login }}</span>
-              <span>
-                <b>Comentário: </b>
-                <a class="link" :href="issue.html_url" target="_blank">{{ issue.body }}</a>
-              </span>
+              <q-item-label lines="1">
+                <span class="text-grey-8">Usuário - </span>
+                <span class="text-weight-medium">[{{ issue.user.login }}]</span>
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-grey-8">Comentário - </span>
+                <span class="text-weight-medium">{{ issue.body }}</span>
+              </q-item-label>
+              <q-item-section top>
+                <a class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase" :href="issue.html_url" target="_blank">
+                  Abrir no Github
+                </a>
+              </q-item-section>
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -41,26 +50,40 @@
 
 <script>
 import axios from 'axios'
+import { mkdir } from 'fs';
 
 export default {
   name: 'Issues',
   data () {
     return {
-      issues: null
+      issues: null,
+      issueData: {
+        title: "Criando issue pela api",
+        body: "Ótimo teste, passou foi criada a issue."
+      }
     }
   },
   methods: {
-    getIssues() {
-      axios.get('https://api.github.com/search/issues?q=author:fsrocha-dev repo:fsrocha-dev/vaga-inovatto').then(response => {
+    async getIssues() {
+      await axios.get('https://api.github.com/search/issues?q=repo:fsrocha-dev/vaga-inovatto').then(response => {
         this.issues = response.data.items
-        console.log(response.data.items)
       }).catch(error => {
-        console.log('falhou')
+        console.log('Falha ao listas as issues')
+      })
+    },
+    async createIssue() {
+      await axios.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
+        headers: { Authorization: "Token fba93d8a2f0c548ba16be0420ef2b21525b62a44"}
+      }).then(response => {
+        console.log('criou a issue')
+      }).catch(error => {
+        console.log('Falha ao tentar criar a issue')
       })
     }
   },
   created() {
     this.getIssues()
+    // this.createIssue()
   }
 }
 </script>
