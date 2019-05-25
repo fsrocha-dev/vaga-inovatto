@@ -5,7 +5,7 @@
         <span class="text-h4">Issues</span>
       </div>
       <div v-for="issue in issues" :key="issue.id" class="row no-wrap items-center q-mt-sm q-pa-sm bg-grey-3 rounded-borders">
-        <q-expansion-item class="full-width">
+        <q-expansion-item group="somegroup" class="full-width">
           <template v-slot:header>
             <q-item-section avatar>
               <q-avatar>
@@ -18,7 +18,8 @@
             <q-item-section side>
               <div class="row items-center">
                 <q-badge v-if="issue.state == 'open'" color="grenn" class="q-mx-md">{{ issue.state }}</q-badge>
-                <q-badge v-else color="red" class="q-mx-md">{{ issue.state }}</q-badge>
+                <q-badge v-else color="red" class="q-mx-sm">{{ issue.state }}</q-badge>
+                <q-badge v-if="issue.locked == true" color="black" >Locked</q-badge>
               </div>
             </q-item-section>
           </template>
@@ -36,6 +37,11 @@
                 <a class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase" :href="issue.html_url" target="_blank">
                   Abrir no Github
                 </a>
+              </q-item-section>
+              <q-item-section side>
+                <div class="row items-rights">
+                  <q-btn @click="editIssue({'title': issue.title, 'body': issue.body, 'number': issue.number})" flat round size="10px" color="primary" icon="edit" />
+                </div>
               </q-item-section>
             </q-card-section>
           </q-card>
@@ -63,6 +69,7 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+    <IssueEdit :editIssueDialog="{'action': action.editIssue, 'data': dataEditIssue}" />
     </div>
   </q-page>
 </template>
@@ -71,6 +78,7 @@
 </style>
 
 <script>
+import IssueEdit from '@/components/IssueEdit'
 import axios from 'axios'
 
 export default {
@@ -86,12 +94,17 @@ export default {
       error: {
         createIssue: false
       },
+      action: {
+        editIssue: false
+      },
+      dataEditIssue: null
     }
   },
   methods: {
     async getIssues() {
       await axios.get('https://api.github.com/search/issues?q=repo:fsrocha-dev/vaga-inovatto').then(response => {
         this.issues = response.data.items
+        console.log(response.data.items)
       }).catch(error => {
         console.log('Falha ao listas as issues')
       })
@@ -102,20 +115,25 @@ export default {
         return
       }
       await axios.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
-        headers: { Authorization: "Token fba93d8a2f0c548ba16be0420ef2b21525b62a44"}
+        headers: { Authorization: "Token 71b021084e5d8fb081735b621ef6a46c669183e2"}
       }).then(response => {
-        this.forceRerender()
-        console.log('criou a issue')
+        console.log('Criou a issue')
       }).catch(error => {
         console.log('Falha ao tentar criar a issue')
       })
     },
     closeCreateIssue(value) {
       this.$emit('closeDialog', value)
+    },
+    editIssue(issue){
+      this.dataEditIssue = issue
+      this.action.editIssue = true
+      console.log(issue)
     }
   },
   created() {
     this.getIssues()
-  }
+  },
+  components: { IssueEdit }
 }
 </script>
