@@ -69,7 +69,7 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <IssueEdit :editIssueDialog="{'data': dataEditIssue}" />
+    <IssueEdit @editReturn="reloadComponent($event)" :editIssueDialog="{'data': dataEditIssue}" />
     </div>
   </q-page>
 </template>
@@ -93,9 +93,6 @@ export default {
       },
       error: {
         createIssue: false
-      },
-      action: {
-        editIssue: false
       },
       dataEditIssue: {
         action: false,
@@ -132,7 +129,10 @@ export default {
     },
     editIssue(issue){
       this.dataEditIssue = issue
-      this.action.editIssue = true
+    },
+    reloadComponent(event){
+      this.dataEditIssue.action = event
+      this.getIssues()
     }
   },
   created() {

@@ -63,7 +63,9 @@ export default {
 			}, {
         headers: { Authorization: "Token 71b021084e5d8fb081735b621ef6a46c669183e2"}
       }).then(response => {
-        console.log('Editou a issue')
+				this.$emit('editReturn')
+				this.$emit('editReturn', false)
+				this.closeEditIssue()
       }).catch(error => {
         console.log('Falha ao tentar editar a issue')
       })
