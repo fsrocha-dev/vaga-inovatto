@@ -1,29 +1,17 @@
 # vaga-inovatto
 
-## Project setup
+## Para Instalar
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Para rodar o projeto local
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Considerações
+Teste feito para inovatto sistemas
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Observações
+Deixei uma key e meu repositório configurado para testes, logo após irei apagar.
