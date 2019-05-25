@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/services/api.js'
 
 export default {
 	name: 'IssuesEdit',
@@ -57,11 +57,11 @@ export default {
         this.error.editIssue = true
         return
 			}
-			await axios.patch(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}`, {
+			await api.patch(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}`, {
 				title: this.issueData.title,
 				body: this.issueData.body
 			}, {
-        headers: { Authorization: "Token e88816c11a99cfad2268f177e56a1d27b8645997"}
+        headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"}
       }).then(response => {
 				this.$emit('editReturn', false)
       }).catch(error => {

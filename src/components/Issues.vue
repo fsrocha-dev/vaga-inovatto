@@ -78,7 +78,7 @@
 <script>
 import IssueEdit from '@/components/IssueEdit'
 import IssueLock from '@/components/IssueLock'
-import axios from 'axios'
+import api from '@/services/api.js'
 
 export default {
   name: 'Issues',
@@ -103,11 +103,10 @@ export default {
   },
   methods: {
     async getIssues() {
-      await axios.get('https://api.github.com/search/issues?q=repo:fsrocha-dev/vaga-inovatto').then(response => {
+      await api.get('search/issues?q=repo:fsrocha-dev/vaga-inovatto').then(response => {
         this.issues = response.data.items
-        console.log(response.data.items)
       }).catch(error => {
-        console.log('Falha ao listas as issues')
+        alert('Não foi possível listar as issues')
       })
     },
     async createIssue() {
@@ -115,12 +114,15 @@ export default {
         this.error.createIssue = true
         return
       }
-      await axios.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
-        headers: { Authorization: "Token e88816c11a99cfad2268f177e56a1d27b8645997"}
+      await api.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
+        headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"}
       }).then((response) => {
-        console.log('Criou a issue')
+        alert('Issue criada com sucesso').then(() => {
+          this.$emit('closeDialog', false)
+        })
       }).catch(error => {
-        console.log('Falha ao tentar criar a issue')
+        alert('Falha ao tentar criar a issue, tente mais tarde.')
+        this.$emit('closeDialog', false)
       })
     },
     closeCreateIssue(value) {

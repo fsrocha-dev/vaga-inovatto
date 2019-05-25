@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/services/api.js'
 
 export default {
   name: 'IssueLock',
@@ -25,14 +25,14 @@ export default {
 	methods: {
 		lockedIssue(value) {
 			if(value == true){
-				axios.put(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {'locked': true,}, {headers: { Authorization: "Token e88816c11a99cfad2268f177e56a1d27b8645997"} }).then(response => {
+				api.put(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {'locked': true,}, {headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"} }).then(response => {
 						this.issueData.status = 'Locked'
 						this.$emit('editReturn', false)
 					}).catch(error => {
 						console.log('Falha ao tentar travar a issue')
 					})
 			} else {
-				axios.delete(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {headers: { Authorization: "Token e88816c11a99cfad2268f177e56a1d27b8645997"} }).then(response => {
+				api.delete(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"} }).then(response => {
 						this.issueData.status = 'Unlocked'
 						this.$emit('editReturn', false)
 					}).catch(error => {
