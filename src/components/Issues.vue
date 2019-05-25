@@ -40,7 +40,7 @@
               </q-item-section>
               <q-item-section side>
                 <div class="row items-rights">
-                  <q-btn @click="editIssue({'title': issue.title, 'body': issue.body, 'number': issue.number})" flat round size="10px" color="primary" icon="edit" />
+                  <q-btn @click="editIssue({'action': true, 'title': issue.title, 'body': issue.body, 'number': issue.number})" flat round size="10px" color="primary" icon="edit" />
                 </div>
               </q-item-section>
             </q-card-section>
@@ -69,7 +69,7 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <IssueEdit :editIssueDialog="{'action': action.editIssue, 'data': dataEditIssue}" />
+    <IssueEdit :editIssueDialog="{'data': dataEditIssue}" />
     </div>
   </q-page>
 </template>
@@ -97,7 +97,12 @@ export default {
       action: {
         editIssue: false
       },
-      dataEditIssue: null
+      dataEditIssue: {
+        action: false,
+        title: '',
+        body: '',
+        number: null
+      }
     }
   },
   methods: {
@@ -128,7 +133,6 @@ export default {
     editIssue(issue){
       this.dataEditIssue = issue
       this.action.editIssue = true
-      console.log(issue)
     }
   },
   created() {
