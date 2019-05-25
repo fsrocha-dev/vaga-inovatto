@@ -23,6 +23,7 @@
 
 <script>
 import api from '@/services/api.js'
+import CONFIG from '@/config.js'
 
 export default {
 	name: 'IssuesEdit',
@@ -57,11 +58,11 @@ export default {
         this.error.editIssue = true
         return
 			}
-			await api.patch(`repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}`, {
+			await api.patch(`repos/${CONFIG.Account}/${CONFIG.Repository}/issues/${this.issueData.number}`, {
 				title: this.issueData.title,
 				body: this.issueData.body
 			}, {
-        headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"}
+        headers: { Authorization: `Token ${CONFIG.Token}`}
       }).then(response => {
 				alert('Issue alterada com sucesso.')
 				this.$emit('editReturn', false)

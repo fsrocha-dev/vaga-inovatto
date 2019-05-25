@@ -106,7 +106,6 @@ export default {
     async getIssues() {
       await api.get(`search/issues?q=repo:${CONFIG.Account}/${CONFIG.Repository}`).then(response => {
         this.issues = response.data.items
-        console.log(CONFIG)
       }).catch(error => {
         alert('Não foi possível listar as issues')
       })
@@ -116,12 +115,11 @@ export default {
         this.error.createIssue = true
         return
       }
-      await api.post('repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
-        headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"}
+      await api.post(`repos/${CONFIG.Account}/${CONFIG.Repository}/issues`, this.issueData, {
+        headers: { Authorization: `Token ${CONFIG.Token}`}
       }).then((response) => {
-        alert('Issue criada com sucesso').then(() => {
-          this.$emit('closeDialog', false)
-        })
+        alert('Issue criada com sucesso')
+        this.$emit('closeDialog', false)
       }).catch(error => {
         alert('Falha ao tentar criar a issue, tente mais tarde.')
         this.$emit('closeDialog', false)

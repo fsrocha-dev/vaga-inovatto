@@ -4,6 +4,7 @@
 
 <script>
 import api from '@/services/api.js'
+import CONFIG from '@/config.js'
 
 export default {
   name: 'IssueLock',
@@ -25,14 +26,14 @@ export default {
 	methods: {
 		lockedIssue(value) {
 			if(value == true){
-				api.put(`repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {'locked': true,}, {headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"} }).then(response => {
+				api.put(`repos/${CONFIG.Account}/${CONFIG.Repository}/issues/${this.issueData.number}/lock`, {'locked': true,}, {headers: { Authorization: `Token ${CONFIG.Token}`} }).then(response => {
 						this.issueData.status = 'Locked'
 						this.$emit('editReturn', false)
 					}).catch(error => {
 						alert('Falha ao tentar travar a issue.')
 					})
 			} else {
-				api.delete(`repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"} }).then(response => {
+				api.delete(`repos/${CONFIG.Account}/${CONFIG.Repository}/issues/${this.issueData.number}/lock`, {headers: { Authorization: `Token ${CONFIG.Token}`} }).then(response => {
 						this.issueData.status = 'Unlocked'
 						this.$emit('editReturn', false)
 					}).catch(error => {
