@@ -63,9 +63,10 @@ export default {
 			}, {
         headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"}
       }).then(response => {
+				alert('Issue alterada com sucesso.')
 				this.$emit('editReturn', false)
       }).catch(error => {
-        console.log('Falha ao tentar editar a issue')
+				alert('Falha ao tentar editar a issue.')
       })
 		},
 		closeEditIssue(value) {

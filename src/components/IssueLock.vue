@@ -29,14 +29,14 @@ export default {
 						this.issueData.status = 'Locked'
 						this.$emit('editReturn', false)
 					}).catch(error => {
-						console.log('Falha ao tentar travar a issue')
+						alert('Falha ao tentar travar a issue.')
 					})
 			} else {
 				api.delete(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"} }).then(response => {
 						this.issueData.status = 'Unlocked'
 						this.$emit('editReturn', false)
 					}).catch(error => {
-						console.log('Falha ao tentar destravar a issue')
+						alert('Falha ao tentar destravar a issue.')
 					})
 			}
 		}
