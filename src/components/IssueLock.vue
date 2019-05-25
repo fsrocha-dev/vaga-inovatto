@@ -25,14 +25,14 @@ export default {
 	methods: {
 		lockedIssue(value) {
 			if(value == true){
-				api.put(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {'locked': true,}, {headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"} }).then(response => {
+				api.put(`repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {'locked': true,}, {headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"} }).then(response => {
 						this.issueData.status = 'Locked'
 						this.$emit('editReturn', false)
 					}).catch(error => {
 						alert('Falha ao tentar travar a issue.')
 					})
 			} else {
-				api.delete(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"} }).then(response => {
+				api.delete(`repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}/lock`, {headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"} }).then(response => {
 						this.issueData.status = 'Unlocked'
 						this.$emit('editReturn', false)
 					}).catch(error => {

@@ -57,11 +57,11 @@ export default {
         this.error.editIssue = true
         return
 			}
-			await api.patch(`https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}`, {
+			await api.patch(`repos/fsrocha-dev/vaga-inovatto/issues/${this.issueData.number}`, {
 				title: this.issueData.title,
 				body: this.issueData.body
 			}, {
-        headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"}
+        headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"}
       }).then(response => {
 				alert('Issue alterada com sucesso.')
 				this.$emit('editReturn', false)

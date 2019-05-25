@@ -79,6 +79,7 @@
 import IssueEdit from '@/components/IssueEdit'
 import IssueLock from '@/components/IssueLock'
 import api from '@/services/api.js'
+import CONFIG from '@/config.js'
 
 export default {
   name: 'Issues',
@@ -103,8 +104,9 @@ export default {
   },
   methods: {
     async getIssues() {
-      await api.get('search/issues?q=repo:fsrocha-dev/vaga-inovatto').then(response => {
+      await api.get(`search/issues?q=repo:${CONFIG.Account}/${CONFIG.Repository}`).then(response => {
         this.issues = response.data.items
+        console.log(CONFIG)
       }).catch(error => {
         alert('Não foi possível listar as issues')
       })
@@ -114,8 +116,8 @@ export default {
         this.error.createIssue = true
         return
       }
-      await api.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
-        headers: { Authorization: "Token 8b97a8ef166da5f951ff8fbb9949081b07046d03"}
+      await api.post('repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
+        headers: { Authorization: "Token 68c554222d9f5e8733e601781b144881241b41e8"}
       }).then((response) => {
         alert('Issue criada com sucesso').then(() => {
           this.$emit('closeDialog', false)
