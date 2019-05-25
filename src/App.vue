@@ -5,15 +5,14 @@
         <q-toolbar-title>
           My Issues
         </q-toolbar-title>
-
         <div>
-          <q-btn no-caps flat text-color="white" color="primary" icon="add" label="Nova Issue" />
+          <q-btn @click="createIssue(true)" no-caps flat text-color="white" color="primary" icon="add" label="Nova Issue" />
         </div>
       </q-toolbar>
     </q-header>
 
     <q-page-container>
-      <IssuesRepo />
+      <IssuesRepo :dialogCreateIssue="valor" @closeDialog="valor = false"/>
     </q-page-container>
   </q-layout>
 </template>
@@ -30,7 +29,12 @@ export default {
 
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      valor: false
+    }
+  },
+  methods: {
+    createIssue(value){
+      this.valor = value
     }
   }
 }

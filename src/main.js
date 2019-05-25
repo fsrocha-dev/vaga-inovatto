@@ -23,7 +23,11 @@ import {
   QAvatar,
   QExpansionItem,
   QCard,
-  QCardSection
+  QCardSection,
+  QDialog,
+  ClosePopup,
+  QInput,
+  QCardActions
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -47,9 +51,13 @@ Vue.use(Quasar, {
     QAvatar,
     QExpansionItem,
     QCard,
-    QCardSection
+    QCardSection,
+    QDialog,
+    QInput,
+    QCardActions
   },
   directives: {
+    ClosePopup
   },
   plugins: {
   }

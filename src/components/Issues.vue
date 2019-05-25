@@ -41,6 +41,28 @@
           </q-card>
         </q-expansion-item>
       </div>
+      <q-dialog v-model="dialogCreateIssue" persistent>
+      <q-card style="min-width: 400px">
+        <q-card-section>
+          <div class="text-h6">Nova Issue</div>
+        </q-card-section>
+
+        <q-card-section>
+          <q-input dense v-model="issueData.title" autofocus placeholder="Título da issue" />
+        </q-card-section>
+        <q-card-section>
+          <q-input dense v-model="issueData.body" autofocus placeholder="Mensagem da issue" />
+        </q-card-section>
+        <q-card-section>
+          <span v-if="error.createIssue" class="text-red">*O Título é obrigarório</span>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancelar" @click="closeCreateIssue(false)" />
+          <q-btn color="green" unelevated label="Adicionar" @click="createIssue()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     </div>
   </q-page>
 </template>
@@ -50,17 +72,20 @@
 
 <script>
 import axios from 'axios'
-import { mkdir } from 'fs';
 
 export default {
   name: 'Issues',
+  props: ['dialogCreateIssue'],
   data () {
     return {
       issues: null,
       issueData: {
-        title: "Criando issue pela api",
-        body: "Ótimo teste, passou foi criada a issue."
-      }
+        title: '',
+        body: ''
+      },
+      error: {
+        createIssue: false
+      },
     }
   },
   methods: {
@@ -72,18 +97,25 @@ export default {
       })
     },
     async createIssue() {
+      if(this.issueData.title === null || this.issueData.title === '' ) {
+        this.error.createIssue = true
+        return
+      }
       await axios.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
         headers: { Authorization: "Token fba93d8a2f0c548ba16be0420ef2b21525b62a44"}
       }).then(response => {
+        this.forceRerender()
         console.log('criou a issue')
       }).catch(error => {
         console.log('Falha ao tentar criar a issue')
       })
+    },
+    closeCreateIssue(value) {
+      this.$emit('closeDialog', value)
     }
   },
   created() {
     this.getIssues()
-    // this.createIssue()
   }
 }
 </script>
