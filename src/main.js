@@ -27,7 +27,8 @@ import {
   QDialog,
   ClosePopup,
   QInput,
-  QCardActions
+  QCardActions,
+  QToggle
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -54,7 +55,8 @@ Vue.use(Quasar, {
     QCardSection,
     QDialog,
     QInput,
-    QCardActions
+    QCardActions,
+    QToggle
   },
   directives: {
     ClosePopup

@@ -61,7 +61,7 @@ export default {
 				title: this.issueData.title,
 				body: this.issueData.body
 			}, {
-        headers: { Authorization: "Token 71b021084e5d8fb081735b621ef6a46c669183e2"}
+        headers: { Authorization: "Token e88816c11a99cfad2268f177e56a1d27b8645997"}
       }).then(response => {
 				this.$emit('editReturn', false)
       }).catch(error => {

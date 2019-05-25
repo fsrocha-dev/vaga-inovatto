@@ -40,7 +40,8 @@
               </q-item-section>
               <q-item-section side>
                 <div class="row items-rights">
-                  <q-btn @click="editIssue({'action': true, 'title': issue.title, 'body': issue.body, 'number': issue.number})" flat round size="10px" color="primary" icon="edit" />
+                  <q-btn @click="editIssue({'action': true, 'title': issue.title, 'body': issue.body, 'number': issue.number})" flat round size="10px" color="primary" icon="edit" class="q-mt-sm" />
+                  <IssueLock @editReturn="reloadComponent($event)" :lockIssue="{'number': issue.number, 'lock': issue.locked}" />
                 </div>
               </q-item-section>
             </q-card-section>
@@ -74,11 +75,9 @@
   </q-page>
 </template>
 
-<style>
-</style>
-
 <script>
 import IssueEdit from '@/components/IssueEdit'
+import IssueLock from '@/components/IssueLock'
 import axios from 'axios'
 
 export default {
@@ -117,7 +116,7 @@ export default {
         return
       }
       await axios.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
-        headers: { Authorization: "Token 71b021084e5d8fb081735b621ef6a46c669183e2"}
+        headers: { Authorization: "Token e88816c11a99cfad2268f177e56a1d27b8645997"}
       }).then((response) => {
         console.log('Criou a issue')
       }).catch(error => {
@@ -138,6 +137,13 @@ export default {
   created() {
     this.getIssues()
   },
-  components: { IssueEdit }
+  components: { IssueEdit, IssueLock }
 }
 </script>
+
+<style>
+.q-toggle {
+  margin-bottom: 0px !important;
+  float: right;
+}
+</style>
