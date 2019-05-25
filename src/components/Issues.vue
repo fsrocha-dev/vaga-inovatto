@@ -91,14 +91,14 @@ export default {
         title: '',
         body: ''
       },
-      error: {
-        createIssue: false
-      },
       dataEditIssue: {
         action: false,
         title: '',
         body: '',
         number: null
+      },
+      error: {
+        createIssue: false
       }
     }
   },
@@ -118,7 +118,7 @@ export default {
       }
       await axios.post('https://api.github.com/repos/fsrocha-dev/vaga-inovatto/issues', this.issueData, {
         headers: { Authorization: "Token 71b021084e5d8fb081735b621ef6a46c669183e2"}
-      }).then(response => {
+      }).then((response) => {
         console.log('Criou a issue')
       }).catch(error => {
         console.log('Falha ao tentar criar a issue')
