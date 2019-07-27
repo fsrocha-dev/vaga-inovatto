@@ -1,4 +1,4 @@
-# vaga-inovatto
+# Vue avançado com github API
 
 ## Para Instalar
 ```
